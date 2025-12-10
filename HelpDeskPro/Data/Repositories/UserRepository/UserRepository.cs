@@ -8,7 +8,7 @@ namespace HelpDeskPro.Data.Repositories.UserRepository
     {
         public async Task AddAsync(User user)
         {
-           await _set.AddAsync(user);
+            await _set.AddAsync(user);
         }
 
         public async Task<bool> EmailExistsAsync(string email)
@@ -80,5 +80,35 @@ namespace HelpDeskPro.Data.Repositories.UserRepository
                 TotalCount = totalGroups
             };
         }
+        public async Task<PagedResult<UsersByTeamGroup>> GetUsersGroupedByTeamAsync(
+            int pageNumber,
+            int pageSize
+        )
+        {
+            var query = _set
+            .AsNoTracking()
+            .SelectMany(u => u.Teams, (user, team) => new { user, team })
+            .GroupBy(ut => ut.team.Name, ut => ut.user);
+
+            var totalGroups = await query.CountAsync();
+
+            var groups = await query
+                .OrderByDescending(g => g.Key)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(g => new UsersByTeamGroup
+                {
+                    TeamName = g.Key,
+                    Users = g.Distinct().ToList()
+                })
+                .ToListAsync();
+
+            return new PagedResult<UsersByTeamGroup>
+            {
+                Items = groups,
+                TotalCount = totalGroups
+            };
+        }
+
     }
 }

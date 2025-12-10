@@ -19,5 +19,9 @@ namespace HelpDeskPro.Data.Repositories.UserRepository
               int pageNumber,
               int pageSize
         );
+        Task<PagedResult<UsersByTeamGroup>> GetUsersGroupedByTeamAsync(
+              int pageNumber,
+              int pageSize
+        );
     }
 }

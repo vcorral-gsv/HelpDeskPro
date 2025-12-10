@@ -13,5 +13,8 @@ namespace HelpDeskPro.Services.UserService
         Task<DetailUserDto?> GetUserByEmailAsync(string email);
         Task<DetailUserDto> CreateUserAsync(AddUserDto request);
         Task<GenericPaginationOutputDto<ListRolesWithUsersDto>> GetUsersGroupedByRoleAsync(PaginationInputDto request);
+        Task<GenericPaginationOutputDto<ListUsersGroupedByTeamDto>> GetUsersGroupedByTeamAsync(PaginationInputDto request);
+
+
     }
 }

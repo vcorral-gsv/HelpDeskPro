@@ -101,5 +101,29 @@ namespace HelpDeskPro.Services.UserService
                 paginationMetadata
             );
         }
+
+        public async Task<GenericPaginationOutputDto<ListUsersGroupedByTeamDto>> GetUsersGroupedByTeamAsync(PaginationInputDto request)
+        {
+            var page = await _userRepository.GetUsersGroupedByTeamAsync(request.Page, request.PageSize);
+            var dtoGroups = page.Items
+                .Select(g => new ListUsersGroupedByTeamDto
+                {
+                    TeamName = g.TeamName,
+                    Users = _mapper.Map<List<ListUserDto>>(g.Users)
+                })
+                .ToList();
+            var paginationMetadata = new PaginationOutputDto
+            {
+                CurrentPage = request.Page,
+                PageSize = request.PageSize,
+                PageItems = dtoGroups.Count,
+                TotalItems = page.TotalCount,
+                TotalPages = (int)Math.Ceiling((double)page.TotalCount / request.PageSize)
+            };
+            return new GenericPaginationOutputDto<ListUsersGroupedByTeamDto>(
+                dtoGroups,
+                paginationMetadata
+            );
+        }
     }
 }
