@@ -290,6 +290,34 @@
           }
         }
       }
+    },
+    "/api/users/get-grouped-by-team": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginationInputDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListUsersGroupedByTeamDtoGenericPaginationOutputDto"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -690,6 +718,39 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ListUserDto"
+            },
+            "nullable": true
+          },
+          "paginationMetadata": {
+            "$ref": "#/components/schemas/PaginationOutputDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ListUsersGroupedByTeamDto": {
+        "type": "object",
+        "properties": {
+          "teamName": {
+            "type": "string",
+            "nullable": true
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListUserDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ListUsersGroupedByTeamDtoGenericPaginationOutputDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListUsersGroupedByTeamDto"
             },
             "nullable": true
           },
