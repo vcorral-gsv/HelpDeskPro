@@ -34,7 +34,7 @@
                             return ApiExceptionMiddleware.GetTranslation(
                                 e.ErrorCode,
                                 e.ErrorMessage,
-                                attempted.Length > 0 ? [attempted] : null
+                                attempted.Length > 0 ? [attempted] : []
                             );
                         })
                         .ToArray();
