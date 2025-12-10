@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpDeskPro.Entities
 {
+    /// <summary>
+    /// Entidad User que representa usuarios del sistema.
+    /// </summary>
     public class User
     {
         public User()

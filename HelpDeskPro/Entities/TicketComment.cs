@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpDeskPro.Entities
 {
+    /// <summary>
+    /// Entidad TicketComment que almacena comentarios asociados a tickets.
+    /// </summary>
     public class TicketComment
     {
         public TicketComment()

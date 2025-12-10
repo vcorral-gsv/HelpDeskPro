@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpDeskPro.Entities
 {
+    /// <summary>
+    /// Entidad RefreshToken para gestionar tokens de refresco asociados a usuarios.
+    /// </summary>
     public class RefreshToken
     {
         // Id (int, PK)

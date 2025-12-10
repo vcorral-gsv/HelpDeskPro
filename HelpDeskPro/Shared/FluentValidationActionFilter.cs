@@ -6,8 +6,14 @@
     using HelpDeskPro.Middleware;
     using Microsoft.AspNetCore.Mvc.Filters;
 
+    /// <summary>
+    /// Filtro global que ejecuta validaciones FluentValidation antes de los controladores.
+    /// </summary>
     public class FluentValidationActionFilter(IServiceProvider _serviceProvider) : IAsyncActionFilter
     {
+        /// <summary>
+        /// Ejecuta las validaciones sobre los argumentos del action y corta la ejecución si hay errores.
+        /// </summary>
         public async Task OnActionExecutionAsync(
             ActionExecutingContext context,
             ActionExecutionDelegate next)

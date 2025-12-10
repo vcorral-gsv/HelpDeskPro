@@ -5,21 +5,25 @@ using HelpDeskPro.Dtos.Ticket;
 
 namespace HelpDeskPro.Services.TicketService
 {
+    /// <summary>
+    /// Implementación del servicio de tickets.
+    /// </summary>
     public class TicketService(
         ITicketRepository _ticketRepository,
         ILogger<TicketService> _logger,
         IMapper _mapper
     ) : ITicketService
     {
+        /// <inheritdoc />
         public async Task<GenericPaginationOutputDto<ListTicketDto>> GetAllTicketsAsync(PaginationInputDto req)
         {
-            var page = await _ticketRepository.GetAllTicketsAsync(req.Page, req.PageSize);
+            var page = await _ticketRepository.GetAllTicketsAsync(req.PageNumber, req.PageSize);
 
             var ticketDtos = _mapper.Map<List<ListTicketDto>>(page.Items);
 
             var paginationMetadata = new PaginationOutputDto
             {
-                CurrentPage = req.Page,
+                CurrentPage = req.PageNumber,
                 PageSize = req.PageSize,
                 PageItems = page.Items.Count,
                 TotalItems = page.TotalCount,
@@ -31,6 +35,7 @@ namespace HelpDeskPro.Services.TicketService
                 paginationMetadata
             );
         }
+        /// <inheritdoc />
         public async Task<List<ListTicketsGroupedByStatus>> GetTicketsGroupedByStatusAsync()
         {
             var res = await _ticketRepository.GetTicketsGroupedByStatusAsync();

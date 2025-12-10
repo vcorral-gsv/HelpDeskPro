@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpDeskPro.Entities
 {
+    /// <summary>
+    /// Entidad TicketCategory que clasifica tickets por categoría.
+    /// </summary>
     public class TicketCategory
     {
         public TicketCategory()

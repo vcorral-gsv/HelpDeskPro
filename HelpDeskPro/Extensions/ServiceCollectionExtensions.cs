@@ -18,9 +18,15 @@ using System.Reflection;
 
 namespace HelpDeskPro.Extensions
 {
+    /// <summary>
+    /// Extensiones para registrar servicios de HelpDeskPro (Swagger, validación, persistencia y localización).
+    /// </summary>
     public static class ServiceCollectionExtensions
     {
         // ---------- Swagger ----------
+        /// <summary>
+        /// Configura Swagger/OpenAPI con seguridad Bearer y comentarios XML.
+        /// </summary>
         public static IServiceCollection AddHelpDeskProSwagger(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -69,6 +75,9 @@ namespace HelpDeskPro.Extensions
         }
 
         // ---------- FluentValidation + filtros ----------
+        /// <summary>
+        /// Configura FluentValidation y filtro global de validación.
+        /// </summary>
         public static IServiceCollection AddHelpDeskProValidation(this IServiceCollection services)
         {
             // Global FV config
@@ -87,6 +96,9 @@ namespace HelpDeskPro.Extensions
         }
 
         // ---------- Persistencia, repos y servicios de dominio ----------
+        /// <summary>
+        /// Configura DbContext, repositorios y servicios de dominio.
+        /// </summary>
         public static IServiceCollection AddHelpDeskProPersistence(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -115,6 +127,9 @@ namespace HelpDeskPro.Extensions
         }
 
         // ---------- Localización / cultura ----------
+        /// <summary>
+        /// Configura localización soportando códigos de idioma disponible y proveedor de cultura por claim.
+        /// </summary>
         public static IServiceCollection AddHelpDeskProLocalization(this IServiceCollection services)
         {
             var supportedCultures = Languages.GetSupportedLanguageCodes()

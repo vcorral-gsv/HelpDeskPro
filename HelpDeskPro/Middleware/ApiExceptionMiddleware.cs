@@ -7,8 +7,14 @@ using System.Net;
 
 namespace HelpDeskPro.Middleware
 {
+    /// <summary>
+    /// Middleware para manejo centralizado de excepciones y respuestas de error JSON.
+    /// </summary>
     public class ApiExceptionMiddleware(RequestDelegate next)
     {
+        /// <summary>
+        /// Invoca el siguiente middleware y captura excepciones para responder con estructura uniforme.
+        /// </summary>
         public async Task InvokeAsync(HttpContext context)
         {
             try
@@ -86,6 +92,9 @@ namespace HelpDeskPro.Middleware
             }
         }
 
+        /// <summary>
+        /// Obtiene una traducción por clave desde recursos, con fallback.
+        /// </summary>
         public static string GetTranslation(string key, string? fallback = null, params string[] translationParams)
         {
             var translation = MsgTranslationsResource.ResourceManager.GetString(key);
@@ -97,6 +106,9 @@ namespace HelpDeskPro.Middleware
                 : translation;
         }
 
+        /// <summary>
+        /// Normaliza el mensaje de InvalidOperationException a una forma traducible.
+        /// </summary>
         private static string NormalizeInvalidOperationMessage(InvalidOperationException ex)
         {
             return ex.Message.Contains("No route matches the supplied values.")
@@ -104,6 +116,9 @@ namespace HelpDeskPro.Middleware
                 : GetTranslation("Unexpected_Error", "An unexpected error occurred.");
         }
 
+        /// <summary>
+        /// Escribe la respuesta JSON de error con metadatos del request y trazas.
+        /// </summary>
         private static async Task WriteErrorAsync(HttpContext context, string description, Exception ex, HttpStatusCode statusCode)
         {
             context.Response.StatusCode = (int)statusCode;
@@ -122,8 +137,14 @@ namespace HelpDeskPro.Middleware
         }
     }
 
+    /// <summary>
+    /// Extensiones para registrar el middleware de excepciones.
+    /// </summary>
     public static class ApiExceptionMiddlewareExtensions
     {
+        /// <summary>
+        /// Registra el middleware de excepciones en la tubería de la aplicación.
+        /// </summary>
         public static IApplicationBuilder UseApiExceptionMiddleware(this IApplicationBuilder app)
             => app.UseMiddleware<ApiExceptionMiddleware>();
     }

@@ -4,6 +4,9 @@ using static HelpDeskPro.Consts.Tickets;
 
 namespace HelpDeskPro.Entities
 {
+    /// <summary>
+    /// Entidad Ticket que representa incidencias/reportes del sistema.
+    /// </summary>
     public class Ticket
     {
         public Ticket()

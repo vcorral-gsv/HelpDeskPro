@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpDeskPro.Entities
 {
+    /// <summary>
+    /// Entidad TicketTag para etiquetar tickets con metadatos como nombre y color.
+    /// </summary>
     public class TicketTag
     {
         public TicketTag()

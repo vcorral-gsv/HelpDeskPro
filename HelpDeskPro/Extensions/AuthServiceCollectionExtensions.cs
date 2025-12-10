@@ -5,8 +5,14 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace HelpDeskPro.Extensions
 {
+    /// <summary>
+    /// Extensiones para registrar autenticación y autorización JWT.
+    /// </summary>
     public static class AuthServiceCollectionExtensions
     {
+        /// <summary>
+        /// Configura JWT Bearer y política por defecto autenticada.
+        /// </summary>
         public static IServiceCollection AddHelpDeskProAuth(
             this IServiceCollection services,
             IConfiguration configuration)

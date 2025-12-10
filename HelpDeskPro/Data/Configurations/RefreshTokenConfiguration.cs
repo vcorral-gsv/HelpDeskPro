@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HelpDeskPro.Data.Configurations
 {
+    /// <summary>
+    /// Configuración EF Core para la entidad RefreshToken.
+    /// </summary>
     public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
     {
         public void Configure(EntityTypeBuilder<RefreshToken> builder)

@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpDeskPro.Entities
 {
+    /// <summary>
+    /// Entidad Team que agrupa usuarios para la gestión de tickets.
+    /// </summary>
     public class Team
     {
         public Team()

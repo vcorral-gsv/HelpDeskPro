@@ -4,8 +4,14 @@ using System.Linq.Expressions;
 
 namespace HelpDeskPro.Criterias.Users
 {
+    /// <summary>
+    /// Criterio de filtrado para consultas de usuarios basado en <see cref="GetUsersFiltersInputDto"/>.
+    /// </summary>
     public class GetUsersCriteria(GetUsersFiltersInputDto _filters) : CriteriaBase<User>
     {
+        /// <summary>
+        /// Construye la expresión que aplica filtros por email, nombre, rol, actividad, fechas y equipos.
+        /// </summary>
         protected override Expression<Func<User, bool>> BuildFilterExpression()
         {
             Expression<Func<User, bool>> filter = u => true;

@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HelpDeskPro.Data.Configurations
 {
+    /// <summary>
+    /// Configuración EF Core para la entidad User.
+    /// </summary>
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)

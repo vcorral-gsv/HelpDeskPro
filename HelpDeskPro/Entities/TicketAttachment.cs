@@ -4,7 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace HelpDeskPro.Entities
 {
 
-    // Solo metadata; el archivo real puedes imaginar que va a un storage externo.
+    /// <summary>
+    /// Entidad TicketAttachment que almacena metadatos de archivos asociados a tickets.
+    /// </summary>
     public class TicketAttachment
     {
         // Id (int, PK)

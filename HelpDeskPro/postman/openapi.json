@@ -17,7 +17,9 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Autentica a un usuario y devuelve el token JWT.",
         "requestBody": {
+          "description": "Credenciales de inicio de sesión",
           "content": {
             "application/json": {
               "schema": {
@@ -28,11 +30,21 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Autenticación correcta",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos de entrada inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -45,7 +57,9 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Refresca el token JWT usando el refresh token.",
         "requestBody": {
+          "description": "Solicitud con refresh token",
           "content": {
             "application/json": {
               "schema": {
@@ -56,11 +70,21 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Token refrescado correctamente",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Refresh token inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -73,7 +97,9 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Registra un nuevo usuario y devuelve sus tokens de acceso.",
         "requestBody": {
+          "description": "Datos del usuario a registrar",
           "content": {
             "application/json": {
               "schema": {
@@ -84,11 +110,21 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Usuario registrado y autenticado",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos de registro inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -101,10 +137,12 @@
         "tags": [
           "Tickets"
         ],
+        "summary": "Obtiene todos los tickets paginados.",
         "parameters": [
           {
-            "name": "Page",
+            "name": "PageNumber",
             "in": "query",
+            "description": "Página solicitada (1-based).",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -113,6 +151,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Tamaño de página.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -121,11 +160,31 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Listado de tickets",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ListTicketDtoGenericPaginationOutputDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -138,9 +197,10 @@
         "tags": [
           "Tickets"
         ],
+        "summary": "Obtiene tickets agrupados por estado.",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Listado agrupado por estado",
             "content": {
               "application/json": {
                 "schema": {
@@ -148,6 +208,26 @@
                   "items": {
                     "$ref": "#/components/schemas/ListTicketsGroupedByStatus"
                   }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -160,7 +240,9 @@
         "tags": [
           "Users"
         ],
+        "summary": "Obtiene usuarios paginados y filtrados.",
         "requestBody": {
+          "description": "Filtros y paginación",
           "content": {
             "application/json": {
               "schema": {
@@ -171,11 +253,41 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Listado paginado de usuarios",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ListUserDtoGenericPaginationOutputDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos de entrada inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -188,10 +300,12 @@
         "tags": [
           "Users"
         ],
+        "summary": "Obtiene un usuario por su identificador.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "Identificador del usuario",
             "required": true,
             "schema": {
               "type": "integer",
@@ -201,11 +315,41 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Usuario encontrado",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DetailUserDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuario no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -218,10 +362,12 @@
         "tags": [
           "Users"
         ],
+        "summary": "Obtiene un usuario por su email.",
         "parameters": [
           {
             "name": "email",
             "in": "path",
+            "description": "Email del usuario",
             "required": true,
             "schema": {
               "type": "string"
@@ -230,11 +376,41 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Usuario encontrado",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DetailUserDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuario no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -247,7 +423,9 @@
         "tags": [
           "Users"
         ],
+        "summary": "Crea un usuario.",
         "requestBody": {
+          "description": "Datos del nuevo usuario",
           "content": {
             "application/json": {
               "schema": {
@@ -257,8 +435,45 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Usuario creado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetailUserDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos de entrada inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -268,7 +483,9 @@
         "tags": [
           "Users"
         ],
+        "summary": "Obtiene usuarios agrupados por rol.",
         "requestBody": {
+          "description": "Paginación",
           "content": {
             "application/json": {
               "schema": {
@@ -279,11 +496,31 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Listado de roles con usuarios",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ListRolesWithUsersDtoGenericPaginationOutputDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -296,7 +533,9 @@
         "tags": [
           "Users"
         ],
+        "summary": "Obtiene usuarios agrupados por equipo.",
         "requestBody": {
+          "description": "Paginación",
           "content": {
             "application/json": {
               "schema": {
@@ -307,11 +546,31 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Listado de equipos con usuarios",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ListUsersGroupedByTeamDtoGenericPaginationOutputDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -333,50 +592,61 @@
         "properties": {
           "email": {
             "type": "string",
+            "description": "Email del usuario.",
             "nullable": true
           },
           "password": {
             "type": "string",
+            "description": "Contraseña del usuario.",
             "nullable": true
           },
           "firstName": {
             "type": "string",
+            "description": "Nombre del usuario.",
             "nullable": true
           },
           "lastName": {
             "type": "string",
+            "description": "Apellidos del Usuario.",
             "nullable": true
           },
           "languageCode": {
             "type": "string",
+            "description": "Código de idioma preferido (opcional).",
             "nullable": true
           },
           "role": {
             "$ref": "#/components/schemas/Roles"
           },
           "isActive": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indica si el usuario se crea activo."
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Datos para crear usuario por un administrador."
       },
       "AuthResponseDto": {
         "type": "object",
         "properties": {
           "accessToken": {
             "type": "string",
+            "description": "Token de acceso JWT.",
             "nullable": true
           },
           "refreshToken": {
             "type": "string",
+            "description": "Token de refresco.",
             "nullable": true
           },
           "expiresAt": {
             "type": "string",
+            "description": "Fecha y hora de expiración del token de acceso.",
             "format": "date-time"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Respuesta de autenticación con tokens de acceso y refresco."
       },
       "DetailUserDto": {
         "required": [
@@ -390,38 +660,47 @@
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Identificador del usuario.",
             "format": "int32"
           },
           "email": {
             "type": "string",
+            "description": "Correo electrónico.",
             "nullable": true
           },
           "lastLoginAt": {
             "type": "string",
+            "description": "Fecha/hora del último inicio de sesión.",
             "format": "date-time",
             "nullable": true
           },
           "firstName": {
             "type": "string",
+            "description": "Nombre.",
             "nullable": true
           },
           "lastName": {
             "type": "string",
+            "description": "Apellidos.",
             "nullable": true
           },
           "role": {
             "type": "string",
+            "description": "Rol del usuario.",
             "nullable": true
           },
           "isActive": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indica si el usuario está activo."
           },
           "createdAt": {
             "type": "string",
+            "description": "Fecha de creación.",
             "format": "date-time"
           },
           "languageCode": {
             "type": "string",
+            "description": "Código de idioma preferido.",
             "nullable": true
           },
           "teamNames": {
@@ -429,6 +708,7 @@
             "items": {
               "type": "string"
             },
+            "description": "Equipos a los que pertenece.",
             "nullable": true
           },
           "tickets": {
@@ -436,6 +716,7 @@
             "items": {
               "$ref": "#/components/schemas/ListTicketDto"
             },
+            "description": "Tickets creados por el usuario.",
             "nullable": true
           },
           "assignedTickets": {
@@ -443,6 +724,7 @@
             "items": {
               "$ref": "#/components/schemas/ListTicketDto"
             },
+            "description": "Tickets asignados al usuario.",
             "nullable": true
           },
           "comments": {
@@ -450,6 +732,7 @@
             "items": {
               "$ref": "#/components/schemas/ListTicketCommentDto"
             },
+            "description": "Comentarios del usuario.",
             "nullable": true
           },
           "attachments": {
@@ -457,40 +740,49 @@
             "items": {
               "$ref": "#/components/schemas/ListTicketAttachmentDto"
             },
+            "description": "Adjuntos subidos por el usuario.",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Usuario con información detallada y relaciones."
       },
       "GetUsersFiltersInputDto": {
         "type": "object",
         "properties": {
-          "page": {
+          "pageNumber": {
             "type": "integer",
+            "description": "Página solicitada (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Tamaño de página.",
             "format": "int32"
           },
           "exactMatch": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Si es true, los filtros se aplican en coincidencia exacta."
           },
           "id": {
             "type": "integer",
+            "description": "Identificador del usuario.",
             "format": "int32",
             "nullable": true
           },
           "email": {
             "type": "string",
+            "description": "Email del usuario.",
             "nullable": true
           },
           "firstName": {
             "type": "string",
+            "description": "Nombre del usuario.",
             "nullable": true
           },
           "lastName": {
             "type": "string",
+            "description": "Apellidos del usuario.",
             "nullable": true
           },
           "roles": {
@@ -498,29 +790,35 @@
             "items": {
               "type": "string"
             },
+            "description": "Roles a incluir en el filtro.",
             "nullable": true
           },
           "isActive": {
             "type": "boolean",
+            "description": "Estado de actividad del usuario.",
             "nullable": true
           },
           "createdAfterDate": {
             "type": "string",
+            "description": "Fecha de creación posterior a.",
             "format": "date-time",
             "nullable": true
           },
           "createdBeforeDate": {
             "type": "string",
+            "description": "Fecha de creación anterior a.",
             "format": "date-time",
             "nullable": true
           },
           "lastLoginAfterDate": {
             "type": "string",
+            "description": "Último login posterior a.",
             "format": "date-time",
             "nullable": true
           },
           "lastLoginBeforeDate": {
             "type": "string",
+            "description": "Último login anterior a.",
             "format": "date-time",
             "nullable": true
           },
@@ -530,6 +828,7 @@
               "type": "integer",
               "format": "int32"
             },
+            "description": "Ids de equipos a filtrar.",
             "nullable": true
           },
           "teamNames": {
@@ -537,16 +836,19 @@
             "items": {
               "type": "string"
             },
+            "description": "Nombres de equipos a filtrar.",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Filtros disponibles para búsqueda de usuarios con paginación."
       },
       "ListRolesWithUsersDto": {
         "type": "object",
         "properties": {
           "roleName": {
             "type": "string",
+            "description": "Nombre del rol.",
             "nullable": true
           },
           "users": {
@@ -554,10 +856,12 @@
             "items": {
               "$ref": "#/components/schemas/ListUserDto"
             },
+            "description": "Usuarios pertenecientes al rol.",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Grupo de usuarios por rol."
       },
       "ListRolesWithUsersDtoGenericPaginationOutputDto": {
         "type": "object",
@@ -567,13 +871,15 @@
             "items": {
               "$ref": "#/components/schemas/ListRolesWithUsersDto"
             },
+            "description": "Elementos de la página actual.",
             "nullable": true
           },
           "paginationMetadata": {
             "$ref": "#/components/schemas/PaginationOutputDto"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Resultado paginado genérico."
       },
       "ListTicketAttachmentDto": {
         "required": [
@@ -584,26 +890,32 @@
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Identificador del adjunto.",
             "format": "int32"
           },
           "fileName": {
             "type": "string",
+            "description": "Nombre del archivo.",
             "nullable": true
           },
           "contentType": {
             "type": "string",
+            "description": "Tipo de contenido (MIME).",
             "nullable": true
           },
           "fileSizeBytes": {
             "type": "integer",
+            "description": "Tamaño del archivo en bytes.",
             "format": "int64"
           },
           "uploadedAt": {
             "type": "string",
+            "description": "Fecha de subida.",
             "format": "date-time"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Información de un adjunto en un ticket."
       },
       "ListTicketCommentDto": {
         "required": [
@@ -613,18 +925,22 @@
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Identificador del comentario.",
             "format": "int32"
           },
           "body": {
             "type": "string",
+            "description": "Contenido del comentario.",
             "nullable": true
           },
           "createdAt": {
             "type": "string",
+            "description": "Fecha de creación del comentario.",
             "format": "date-time"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Comentario asociado a un ticket."
       },
       "ListTicketDto": {
         "required": [
@@ -635,22 +951,27 @@
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Identificador del ticket.",
             "format": "int32"
           },
           "title": {
             "type": "string",
+            "description": "Título del ticket.",
             "nullable": true
           },
           "status": {
             "type": "string",
+            "description": "Estado actual del ticket.",
             "nullable": true
           },
           "createdAt": {
             "type": "string",
+            "description": "Fecha de creación.",
             "format": "date-time"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Ticket para listados."
       },
       "ListTicketDtoGenericPaginationOutputDto": {
         "type": "object",
@@ -660,13 +981,15 @@
             "items": {
               "$ref": "#/components/schemas/ListTicketDto"
             },
+            "description": "Elementos de la página actual.",
             "nullable": true
           },
           "paginationMetadata": {
             "$ref": "#/components/schemas/PaginationOutputDto"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Resultado paginado genérico."
       },
       "ListTicketsGroupedByStatus": {
         "required": [
@@ -677,6 +1000,7 @@
         "properties": {
           "status": {
             "type": "string",
+            "description": "Estado agrupador.",
             "nullable": true
           },
           "tickets": {
@@ -684,10 +1008,12 @@
             "items": {
               "$ref": "#/components/schemas/ListTicketDto"
             },
+            "description": "Listado de tickets en el estado.",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Grupo de tickets por estado."
       },
       "ListUserDto": {
         "required": [
@@ -697,19 +1023,23 @@
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Identificador del usuario.",
             "format": "int32"
           },
           "email": {
             "type": "string",
+            "description": "Correo electrónico.",
             "nullable": true
           },
           "lastLoginAt": {
             "type": "string",
+            "description": "Fecha/hora del último inicio de sesión.",
             "format": "date-time",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Usuario en listados."
       },
       "ListUserDtoGenericPaginationOutputDto": {
         "type": "object",
@@ -719,19 +1049,22 @@
             "items": {
               "$ref": "#/components/schemas/ListUserDto"
             },
+            "description": "Elementos de la página actual.",
             "nullable": true
           },
           "paginationMetadata": {
             "$ref": "#/components/schemas/PaginationOutputDto"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Resultado paginado genérico."
       },
       "ListUsersGroupedByTeamDto": {
         "type": "object",
         "properties": {
           "teamName": {
             "type": "string",
+            "description": "Nombre del equipo.",
             "nullable": true
           },
           "users": {
@@ -739,10 +1072,12 @@
             "items": {
               "$ref": "#/components/schemas/ListUserDto"
             },
+            "description": "Usuarios del equipo.",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Grupo de usuarios por equipo."
       },
       "ListUsersGroupedByTeamDtoGenericPaginationOutputDto": {
         "type": "object",
@@ -752,13 +1087,15 @@
             "items": {
               "$ref": "#/components/schemas/ListUsersGroupedByTeamDto"
             },
+            "description": "Elementos de la página actual.",
             "nullable": true
           },
           "paginationMetadata": {
             "$ref": "#/components/schemas/PaginationOutputDto"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Resultado paginado genérico."
       },
       "LoginRequestDto": {
         "required": [
@@ -769,68 +1106,110 @@
         "properties": {
           "email": {
             "type": "string",
+            "description": "Email del usuario.",
             "nullable": true
           },
           "password": {
             "type": "string",
+            "description": "Contraseña del usuario.",
             "nullable": true
           },
           "languageCode": {
             "type": "string",
+            "description": "Código de idioma preferido (opcional).",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Datos de entrada para iniciar sesión."
       },
       "PaginationInputDto": {
         "type": "object",
         "properties": {
-          "page": {
+          "pageNumber": {
             "type": "integer",
+            "description": "Página solicitada (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Tamaño de página.",
             "format": "int32"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Parámetros de entrada para paginación."
       },
       "PaginationOutputDto": {
         "type": "object",
         "properties": {
           "totalItems": {
             "type": "integer",
+            "description": "Total de elementos.",
             "format": "int32"
           },
           "totalPages": {
             "type": "integer",
+            "description": "Total de páginas.",
             "format": "int32"
           },
           "currentPage": {
             "type": "integer",
+            "description": "Página actual.",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Tamaño de página.",
             "format": "int32"
           },
           "pageItems": {
             "type": "integer",
+            "description": "Elementos en la página actual.",
             "format": "int32"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Metadatos de salida de la paginación."
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
       },
       "RefreshTokenRequestDto": {
         "type": "object",
         "properties": {
           "refreshToken": {
             "type": "string",
+            "description": "Refresh token emitido previamente.",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Solicitud para refrescar el token de acceso."
       },
       "RegisterUserRequestDto": {
         "required": [
@@ -843,26 +1222,32 @@
         "properties": {
           "email": {
             "type": "string",
+            "description": "Email del usuario.",
             "nullable": true
           },
           "password": {
             "type": "string",
+            "description": "Contraseña del usuario.",
             "nullable": true
           },
           "firstName": {
             "type": "string",
+            "description": "Nombre del usuario.",
             "nullable": true
           },
           "lastName": {
             "type": "string",
+            "description": "Apellidos del Usuario.",
             "nullable": true
           },
           "languageCode": {
             "type": "string",
+            "description": "Código de idioma preferido (opcional).",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Datos de entrada para registrar un nuevo usuario."
       },
       "Roles": {
         "enum": [
@@ -893,7 +1278,8 @@
       "name": "Auth"
     },
     {
-      "name": "Tickets"
+      "name": "Tickets",
+      "description": "Controller para la gestión de tickets."
     },
     {
       "name": "Users"

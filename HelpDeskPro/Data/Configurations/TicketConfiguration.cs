@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HelpDeskPro.Data.Configurations
 {
+    /// <summary>
+    /// Configuración EF Core para la entidad Ticket.
+    /// </summary>
     public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
     {
         public void Configure(EntityTypeBuilder<Ticket> builder)

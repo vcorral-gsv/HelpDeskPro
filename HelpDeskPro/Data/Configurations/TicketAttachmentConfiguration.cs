@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HelpDeskPro.Data.Configurations
 {
+    /// <summary>
+    /// Configuración EF Core para la entidad TicketAttachment.
+    /// </summary>
     public class TicketAttachmentConfiguration : IEntityTypeConfiguration<TicketAttachment>
     {
         public void Configure(EntityTypeBuilder<TicketAttachment> builder)

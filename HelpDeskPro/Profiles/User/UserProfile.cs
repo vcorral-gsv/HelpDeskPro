@@ -3,6 +3,9 @@ using HelpDeskPro.Dtos.User;
 
 namespace HelpDeskPro.Profiles.User
 {
+    /// <summary>
+    /// Perfil de AutoMapper para conversión de entidades de usuario a DTOs.
+    /// </summary>
     public class UserProfile : Profile
     {
         public UserProfile()

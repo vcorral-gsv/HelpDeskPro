@@ -12,6 +12,9 @@ using System.Security.Cryptography;
 
 namespace HelpDeskPro.Services.AuthService
 {
+    /// <summary>
+    /// Implementación del servicio de autenticación.
+    /// </summary>
     public class AuthService(
         IUserRepository _userRepository,
         IRefreshTokenRepository _refreshTokenRepository,
@@ -21,6 +24,7 @@ namespace HelpDeskPro.Services.AuthService
         IMapper _mapper
     ) : IAuthService
     {
+        /// <inheritdoc />
         public async Task<AuthResponseDto> LoginAsync(LoginRequestDto request)
         {
             var user = await _userRepository.GetByEmailAsync(request.Email);
@@ -49,6 +53,7 @@ namespace HelpDeskPro.Services.AuthService
             };
         }
 
+        /// <inheritdoc />
         public async Task<AuthResponseDto> RefreshTokenAsync(string refreshToken)
         {
             if (string.IsNullOrWhiteSpace(refreshToken))
@@ -90,6 +95,7 @@ namespace HelpDeskPro.Services.AuthService
             };
         }
 
+        /// <inheritdoc />
         public async Task RegisterAsync(RegisterUserRequestDto request)
         {
             var emailExists = await _userRepository.EmailExistsAsync(request.Email);
@@ -115,6 +121,12 @@ namespace HelpDeskPro.Services.AuthService
         // Helpers privados
         // ========================
 
+        /// <summary>
+        /// Genera un token de acceso JWT.
+        /// </summary>
+        /// <param name="user">Usuario autenticado</param>
+        /// <param name="language">Código de idioma para claim locale</param>
+        /// <returns>Token JWT serializado</returns>
         private string GenerateAccessToken(User user, string language)
         {
             var secretForKey = _configuration["Authentication:SecretForKey"];
@@ -147,6 +159,11 @@ namespace HelpDeskPro.Services.AuthService
             return tokenHandler.WriteToken(jwtSecurityToken);
         }
 
+        /// <summary>
+        /// Genera una entidad de refresh token aleatorio para persistencia.
+        /// </summary>
+        /// <param name="userId">Identificador del usuario</param>
+        /// <returns>Entidad de refresh token</returns>
         private static RefreshToken GenerateRefreshTokenEntity(int userId)
         {
             // 32 bytes → 256 bits de entropía

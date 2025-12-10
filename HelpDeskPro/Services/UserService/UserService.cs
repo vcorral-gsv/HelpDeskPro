@@ -8,6 +8,9 @@ using HelpDeskPro.Entities;
 
 namespace HelpDeskPro.Services.UserService
 {
+    /// <summary>
+    /// Implementación del servicio de usuarios.
+    /// </summary>
     public class UserService(
         IUserRepository _userRepository,
         ILogger<UserService> _logger,
@@ -15,6 +18,7 @@ namespace HelpDeskPro.Services.UserService
         IPasswordService _passwordService
     ) : IUserService
     {
+        /// <inheritdoc />
         public async Task<GenericPaginationOutputDto<ListUserDto>> GetUsersAsync(GetUsersFiltersInputDto request)
         {
             var critList = new List<CriteriaBase<User>>()
@@ -23,7 +27,7 @@ namespace HelpDeskPro.Services.UserService
             };
 
             var page = await _userRepository.GetUsersAsync(
-                request.Page,
+                request.PageNumber,
                 request.PageSize,
                 critList
             );
@@ -32,7 +36,7 @@ namespace HelpDeskPro.Services.UserService
 
             var paginationMetadata = new PaginationOutputDto
             {
-                CurrentPage = request.Page,
+                CurrentPage = request.PageNumber,
                 PageSize = request.PageSize,
                 PageItems = userDtos.Count,
                 TotalItems = page.TotalCount,
@@ -44,6 +48,7 @@ namespace HelpDeskPro.Services.UserService
             );
         }
 
+        /// <inheritdoc />
         public async Task<DetailUserDto?> GetUserByIdAsync(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
@@ -55,6 +60,7 @@ namespace HelpDeskPro.Services.UserService
             return userDto;
         }
 
+        /// <inheritdoc />
         public async Task<DetailUserDto?> GetUserByEmailAsync(string email)
         {
             var user = await _userRepository.GetByEmailAsync(email);
@@ -66,6 +72,7 @@ namespace HelpDeskPro.Services.UserService
             return userDto;
         }
 
+        /// <inheritdoc />
         public async Task<DetailUserDto> CreateUserAsync(AddUserDto request)
         {
             var user = _mapper.Map<User>(request);
@@ -76,9 +83,10 @@ namespace HelpDeskPro.Services.UserService
             return userDto;
         }
 
+        /// <inheritdoc />
         public async Task<GenericPaginationOutputDto<ListRolesWithUsersDto>> GetUsersGroupedByRoleAsync(PaginationInputDto request)
         {
-            var page = await _userRepository.GetUsersGroupedByRoleAsync(request.Page, request.PageSize);
+            var page = await _userRepository.GetUsersGroupedByRoleAsync(request.PageNumber, request.PageSize);
 
             var dtoGroups = page.Items
                 .Select(g => new ListRolesWithUsersDto
@@ -90,7 +98,7 @@ namespace HelpDeskPro.Services.UserService
 
             var paginationMetadata = new PaginationOutputDto
             {
-                CurrentPage = request.Page,
+                CurrentPage = request.PageNumber,
                 PageSize = request.PageSize,
                 PageItems = dtoGroups.Count,
                 TotalItems = page.TotalCount,
@@ -102,9 +110,10 @@ namespace HelpDeskPro.Services.UserService
             );
         }
 
+        /// <inheritdoc />
         public async Task<GenericPaginationOutputDto<ListUsersGroupedByTeamDto>> GetUsersGroupedByTeamAsync(PaginationInputDto request)
         {
-            var page = await _userRepository.GetUsersGroupedByTeamAsync(request.Page, request.PageSize);
+            var page = await _userRepository.GetUsersGroupedByTeamAsync(request.PageNumber, request.PageSize);
             var dtoGroups = page.Items
                 .Select(g => new ListUsersGroupedByTeamDto
                 {
@@ -114,7 +123,7 @@ namespace HelpDeskPro.Services.UserService
                 .ToList();
             var paginationMetadata = new PaginationOutputDto
             {
-                CurrentPage = request.Page,
+                CurrentPage = request.PageNumber,
                 PageSize = request.PageSize,
                 PageItems = dtoGroups.Count,
                 TotalItems = page.TotalCount,
