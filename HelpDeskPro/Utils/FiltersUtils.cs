@@ -10,12 +10,16 @@ namespace HelpDeskPro.Utils
             ParameterExpression parameter = Expression.Parameter(typeof(T));
 
             var leftVisitor = new ReplaceExpressionVisitor(expr1.Parameters[0], parameter);
-            Expression left = leftVisitor.Visit(expr1.Body);
+            Expression? left = leftVisitor.Visit(expr1.Body);
 
             var rightVisitor = new ReplaceExpressionVisitor(expr2.Parameters[0], parameter);
-            Expression right = rightVisitor.Visit(expr2.Body);
+            Expression? right = rightVisitor.Visit(expr2.Body);
 
-            return Expression.Lambda<Func<T, bool>>(
+            if (left is null)
+                throw new InvalidOperationException("Failed to process left expression in AndAlso operation for parameter 'expr1'. Expression body was null.");
+            return right is null
+                ? throw new InvalidOperationException("Failed to process right expression in AndAlso operation for parameter 'expr2'. Expression body was null.")
+                : Expression.Lambda<Func<T, bool>>(
                 Expression.AndAlso(left, right), parameter);
         }
 
