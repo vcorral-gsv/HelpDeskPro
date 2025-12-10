@@ -1,0 +1,993 @@
+{
+	"info": {
+		"_postman_id": "3561ea73-b5ab-40d4-9996-e65a8f3b3af8",
+		"name": "HelpDeskPro API",
+		"description": "API para gestión de tickets de soporte",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "45642449-3561ea73-b5ab-40d4-9996-e65a8f3b3af8"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "/api/auth/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "95e2d670-6f64-4ef1-b49a-3498a7ddbd89",
+								"exec": [
+									"// Parse response\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"// Ajusta la ruta del token según tu API\r",
+									"const token = json.accessToken ?? json.token ?? json.tokenString ?? json.data?.token;\r",
+									"\r",
+									"if (!token) {\r",
+									"    console.error(\"❌ Token not found in login response\");\r",
+									"} else {\r",
+									"    // Guardar token en variables de entorno\r",
+									"    pm.collectionVariables.set(\"bearerToken\", token)\r",
+									"    console.log(\"🔐 Token saved to environment:\", token);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "5125b54e-b778-44ec-a99f-696d62d11d73",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"victor2@gesvatec.com\",\n\t\"password\": \"password\",\n\t\"languageCode\": \"es\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "28b38e87-b991-4b76-83b1-5b3b8ba9a9e4",
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"string\",\n\t\"password\": \"string\",\n\t\"languageCode\": \"string\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"accessToken\": \"string\",\n\t\"refreshToken\": \"string\",\n\t\"expiresAt\": \"1999-06-11T12:34:19.820Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/auth/refresh-token",
+					"id": "23a70e99-178f-4dec-8588-29b4fd723509",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"refreshToken\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "7458c320-f363-4b10-a1bc-46ae2243b92c",
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"refreshToken\": \"string\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/refresh-token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"refresh-token"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"accessToken\": \"string\",\n\t\"refreshToken\": \"string\",\n\t\"expiresAt\": \"1999-06-11T12:34:19.820Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/auth/register",
+					"id": "6da09120-5b5e-4fa5-85c4-bb096dad42ea",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"string\",\n\t\"firstName\": \"string\",\n\t\"lastName\": \"string\",\n\t\"password\": \"string\",\n\t\"languageCode\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "e1c1bf83-603b-4c2d-9d70-5638b02b7074",
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"string\",\n\t\"firstName\": \"string\",\n\t\"lastName\": \"string\",\n\t\"password\": \"string\",\n\t\"languageCode\": \"string\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"accessToken\": \"string\",\n\t\"refreshToken\": \"string\",\n\t\"expiresAt\": \"1999-06-11T12:34:19.820Z\"\n}"
+						}
+					]
+				}
+			],
+			"id": "501f381b-faa4-47da-999c-849644553787"
+		},
+		{
+			"name": "Tickets",
+			"item": [
+				{
+					"name": "/api/tickets",
+					"id": "f9c83871-3f7c-4720-9d17-0e251a01e401",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets?Page=9249&PageSize=9249",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "9249"
+								},
+								{
+									"key": "PageSize",
+									"value": "9249"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "1d567f7e-39ef-49c5-858b-620d9c41c9f5",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/tickets?Page=9249&PageSize=9249",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"tickets"
+									],
+									"query": [
+										{
+											"key": "Page",
+											"value": "9249"
+										},
+										{
+											"key": "PageSize",
+											"value": "9249"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"items\": [\n\t\t{\n\t\t\t\"status\": \"string\",\n\t\t\t\"title\": \"string\",\n\t\t\t\"id\": 5232,\n\t\t\t\"createdAt\": \"2007-07-22T20:23:34.095Z\"\n\t\t},\n\t\t{\n\t\t\t\"status\": \"string\",\n\t\t\t\"title\": \"string\",\n\t\t\t\"id\": 7255,\n\t\t\t\"createdAt\": \"2020-12-17T18:48:51.960Z\"\n\t\t}\n\t],\n\t\"paginationMetadata\": {\n\t\t\"totalItems\": 9410,\n\t\t\"totalPages\": 8967,\n\t\t\"currentPage\": 2718,\n\t\t\"pageSize\": 7021,\n\t\t\"pageItems\": 3213\n\t}\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tickets/grouped-by-status",
+					"id": "7c166988-d83a-4a44-bb61-5b7f547e4818",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets/grouped-by-status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"grouped-by-status"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "2c7c0750-70cf-4c9b-808f-71994fb24011",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/tickets/grouped-by-status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"tickets",
+										"grouped-by-status"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n\t{\n\t\t\"status\": \"string\",\n\t\t\"tickets\": [\n\t\t\t{\n\t\t\t\t\"status\": \"string\",\n\t\t\t\t\"title\": \"string\",\n\t\t\t\t\"id\": 8448,\n\t\t\t\t\"createdAt\": \"1962-04-26T16:40:47.277Z\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"status\": \"string\",\n\t\t\t\t\"title\": \"string\",\n\t\t\t\t\"id\": 9889,\n\t\t\t\t\"createdAt\": \"1961-08-08T02:37:06.957Z\"\n\t\t\t}\n\t\t]\n\t},\n\t{\n\t\t\"status\": \"string\",\n\t\t\"tickets\": [\n\t\t\t{\n\t\t\t\t\"status\": \"string\",\n\t\t\t\t\"title\": \"string\",\n\t\t\t\t\"id\": 1633,\n\t\t\t\t\"createdAt\": \"1995-11-18T21:10:55.288Z\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"status\": \"string\",\n\t\t\t\t\"title\": \"string\",\n\t\t\t\t\"id\": 839,\n\t\t\t\t\"createdAt\": \"1976-03-20T01:06:44.425Z\"\n\t\t\t}\n\t\t]\n\t}\n]"
+						}
+					]
+				}
+			],
+			"id": "326b01c0-b1ad-492f-84e2-908dfecfb2a5"
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "/api/users/get-all",
+					"id": "9930f71a-673d-4028-be8c-1a6d074fd627",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"page\": 29,\n\t\"pageSize\": 3092,\n\t\"exactMatch\": false,\n\t\"id\": 1793,\n\t\"email\": \"string\",\n\t\"firstName\": \"string\",\n\t\"lastName\": \"string\",\n\t\"roles\": [\n\t\t\"string\",\n\t\t\"string\"\n\t],\n\t\"isActive\": true,\n\t\"createdAfterDate\": \"2000-01-31T12:44:45.824Z\",\n\t\"createdBeforeDate\": \"2003-06-08T09:54:37.534Z\",\n\t\"lastLoginAfterDate\": \"1992-05-02T17:29:50.617Z\",\n\t\"lastLoginBeforeDate\": \"1998-05-27T23:21:30.324Z\",\n\t\"teamIds\": [\n\t\t7436,\n\t\t1566\n\t],\n\t\"teamNames\": [\n\t\t\"string\",\n\t\t\"string\"\n\t]\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/get-all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"get-all"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "a1430197-f5f5-439f-91bd-0f7aaf12a86b",
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"page\": 29,\n\t\"pageSize\": 3092,\n\t\"exactMatch\": false,\n\t\"id\": 1793,\n\t\"email\": \"string\",\n\t\"firstName\": \"string\",\n\t\"lastName\": \"string\",\n\t\"roles\": [\n\t\t\"string\",\n\t\t\"string\"\n\t],\n\t\"isActive\": true,\n\t\"createdAfterDate\": \"2000-01-31T12:44:45.824Z\",\n\t\"createdBeforeDate\": \"2003-06-08T09:54:37.534Z\",\n\t\"lastLoginAfterDate\": \"1992-05-02T17:29:50.617Z\",\n\t\"lastLoginBeforeDate\": \"1998-05-27T23:21:30.324Z\",\n\t\"teamIds\": [\n\t\t7436,\n\t\t1566\n\t],\n\t\"teamNames\": [\n\t\t\"string\",\n\t\t\"string\"\n\t]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/users/get-all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"get-all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"items\": [\n\t\t{\n\t\t\t\"email\": \"string\",\n\t\t\t\"id\": 7628,\n\t\t\t\"lastLoginAt\": \"2023-03-14T08:40:23.085Z\"\n\t\t},\n\t\t{\n\t\t\t\"email\": \"string\",\n\t\t\t\"id\": 2031,\n\t\t\t\"lastLoginAt\": \"1997-08-22T20:30:06.273Z\"\n\t\t}\n\t],\n\t\"paginationMetadata\": {\n\t\t\"totalItems\": 9094,\n\t\t\"totalPages\": 8886,\n\t\t\"currentPage\": 8168,\n\t\t\"pageSize\": 4447,\n\t\t\"pageItems\": 135\n\t}\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/users/:id",
+					"id": "8959d08d-aaa5-414c-ae58-ad28b142111d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "9249"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "e3173ce4-6e43-4967-b9f8-a39138a762fb",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/users/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "9249"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"email\": \"string\",\n\t\"firstName\": \"string\",\n\t\"languageCode\": \"string\",\n\t\"lastName\": \"string\",\n\t\"role\": \"string\",\n\t\"id\": 5266,\n\t\"lastLoginAt\": \"1951-10-16T18:42:22.029Z\",\n\t\"isActive\": false,\n\t\"createdAt\": \"1966-03-24T15:23:47.131Z\",\n\t\"teamNames\": [\n\t\t\"string\",\n\t\t\"string\"\n\t],\n\t\"tickets\": [\n\t\t{\n\t\t\t\"status\": \"string\",\n\t\t\t\"title\": \"string\",\n\t\t\t\"id\": 2749,\n\t\t\t\"createdAt\": \"2010-12-22T01:35:52.871Z\"\n\t\t},\n\t\t{\n\t\t\t\"status\": \"string\",\n\t\t\t\"title\": \"string\",\n\t\t\t\"id\": 4002,\n\t\t\t\"createdAt\": \"2015-12-30T15:49:32.296Z\"\n\t\t}\n\t],\n\t\"assignedTickets\": [\n\t\t{\n\t\t\t\"status\": \"string\",\n\t\t\t\"title\": \"string\",\n\t\t\t\"id\": 5567,\n\t\t\t\"createdAt\": \"1961-04-01T18:05:43.433Z\"\n\t\t},\n\t\t{\n\t\t\t\"status\": \"string\",\n\t\t\t\"title\": \"string\",\n\t\t\t\"id\": 7287,\n\t\t\t\"createdAt\": \"1980-07-17T06:02:16.035Z\"\n\t\t}\n\t],\n\t\"comments\": [\n\t\t{\n\t\t\t\"body\": \"string\",\n\t\t\t\"id\": 7342,\n\t\t\t\"createdAt\": \"1999-11-30T09:48:10.504Z\"\n\t\t},\n\t\t{\n\t\t\t\"body\": \"string\",\n\t\t\t\"id\": 9339,\n\t\t\t\"createdAt\": \"2013-07-20T15:39:33.399Z\"\n\t\t}\n\t],\n\t\"attachments\": [\n\t\t{\n\t\t\t\"contentType\": \"string\",\n\t\t\t\"fileName\": \"string\",\n\t\t\t\"id\": 6532,\n\t\t\t\"fileSizeBytes\": 6601,\n\t\t\t\"uploadedAt\": \"2019-04-06T05:47:27.093Z\"\n\t\t},\n\t\t{\n\t\t\t\"contentType\": \"string\",\n\t\t\t\"fileName\": \"string\",\n\t\t\t\"id\": 283,\n\t\t\t\"fileSizeBytes\": 1127,\n\t\t\t\"uploadedAt\": \"1949-05-26T10:42:59.988Z\"\n\t\t}\n\t]\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/users/by-email/:email",
+					"id": "e6309f6e-af2d-4f34-8835-04354089041a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/by-email/:email",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"by-email",
+								":email"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": "string"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "64cbbd36-8ea6-42fb-9573-6b4bda6781d8",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/users/by-email/:email",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"by-email",
+										":email"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "string"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"email\": \"string\",\n\t\"firstName\": \"string\",\n\t\"languageCode\": \"string\",\n\t\"lastName\": \"string\",\n\t\"role\": \"string\",\n\t\"id\": 5266,\n\t\"lastLoginAt\": \"1951-10-16T18:42:22.029Z\",\n\t\"isActive\": false,\n\t\"createdAt\": \"1966-03-24T15:23:47.131Z\",\n\t\"teamNames\": [\n\t\t\"string\",\n\t\t\"string\"\n\t],\n\t\"tickets\": [\n\t\t{\n\t\t\t\"status\": \"string\",\n\t\t\t\"title\": \"string\",\n\t\t\t\"id\": 2749,\n\t\t\t\"createdAt\": \"2010-12-22T01:35:52.871Z\"\n\t\t},\n\t\t{\n\t\t\t\"status\": \"string\",\n\t\t\t\"title\": \"string\",\n\t\t\t\"id\": 4002,\n\t\t\t\"createdAt\": \"2015-12-30T15:49:32.296Z\"\n\t\t}\n\t],\n\t\"assignedTickets\": [\n\t\t{\n\t\t\t\"status\": \"string\",\n\t\t\t\"title\": \"string\",\n\t\t\t\"id\": 5567,\n\t\t\t\"createdAt\": \"1961-04-01T18:05:43.433Z\"\n\t\t},\n\t\t{\n\t\t\t\"status\": \"string\",\n\t\t\t\"title\": \"string\",\n\t\t\t\"id\": 7287,\n\t\t\t\"createdAt\": \"1980-07-17T06:02:16.035Z\"\n\t\t}\n\t],\n\t\"comments\": [\n\t\t{\n\t\t\t\"body\": \"string\",\n\t\t\t\"id\": 7342,\n\t\t\t\"createdAt\": \"1999-11-30T09:48:10.504Z\"\n\t\t},\n\t\t{\n\t\t\t\"body\": \"string\",\n\t\t\t\"id\": 9339,\n\t\t\t\"createdAt\": \"2013-07-20T15:39:33.399Z\"\n\t\t}\n\t],\n\t\"attachments\": [\n\t\t{\n\t\t\t\"contentType\": \"string\",\n\t\t\t\"fileName\": \"string\",\n\t\t\t\"id\": 6532,\n\t\t\t\"fileSizeBytes\": 6601,\n\t\t\t\"uploadedAt\": \"2019-04-06T05:47:27.093Z\"\n\t\t},\n\t\t{\n\t\t\t\"contentType\": \"string\",\n\t\t\t\"fileName\": \"string\",\n\t\t\t\"id\": 283,\n\t\t\t\"fileSizeBytes\": 1127,\n\t\t\t\"uploadedAt\": \"1949-05-26T10:42:59.988Z\"\n\t\t}\n\t]\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/users/create",
+					"id": "a01d84b2-fa28-4db2-9879-05d9a9c8ae63",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"string\",\n\t\"firstName\": \"string\",\n\t\"lastName\": \"string\",\n\t\"password\": \"string\",\n\t\"languageCode\": \"string\",\n\t\"role\": 1,\n\t\"isActive\": false\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "fe1854f6-3671-4e20-9368-b69b4bc4d49d",
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"string\",\n\t\"firstName\": \"string\",\n\t\"lastName\": \"string\",\n\t\"password\": \"string\",\n\t\"languageCode\": \"string\",\n\t\"role\": 1,\n\t\"isActive\": false\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/users/create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": []
+						}
+					]
+				},
+				{
+					"name": "/api/users/get-grouped-by-role",
+					"id": "15a199db-36d4-4389-91f7-98e55e5646c9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"page\": 9954,\n\t\"pageSize\": 3925\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/get-grouped-by-role",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"get-grouped-by-role"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "2b0a1cd6-c480-4ab8-827e-f5de488a61e8",
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"page\": 9954,\n\t\"pageSize\": 3925\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/users/get-grouped-by-role",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"get-grouped-by-role"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"items\": [\n\t\t{\n\t\t\t\"roleName\": \"string\",\n\t\t\t\"users\": [\n\t\t\t\t{\n\t\t\t\t\t\"email\": \"string\",\n\t\t\t\t\t\"id\": 342,\n\t\t\t\t\t\"lastLoginAt\": \"1967-06-07T09:30:02.816Z\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"email\": \"string\",\n\t\t\t\t\t\"id\": 8693,\n\t\t\t\t\t\"lastLoginAt\": \"1993-12-01T10:29:18.162Z\"\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t{\n\t\t\t\"roleName\": \"string\",\n\t\t\t\"users\": [\n\t\t\t\t{\n\t\t\t\t\t\"email\": \"string\",\n\t\t\t\t\t\"id\": 2696,\n\t\t\t\t\t\"lastLoginAt\": \"1959-09-21T21:20:36.452Z\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"email\": \"string\",\n\t\t\t\t\t\"id\": 7445,\n\t\t\t\t\t\"lastLoginAt\": \"1988-11-10T00:43:40.201Z\"\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t],\n\t\"paginationMetadata\": {\n\t\t\"totalItems\": 1477,\n\t\t\"totalPages\": 4119,\n\t\t\"currentPage\": 4133,\n\t\t\"pageSize\": 3382,\n\t\t\"pageItems\": 5810\n\t}\n}"
+						}
+					]
+				}
+			],
+			"id": "f0917e44-9526-4a36-904e-76a877b96300"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearerToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "20d82f04-e0e0-4074-9027-f67a07ac02b3",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9471642b-999d-47af-bc4d-1722b8d6d769",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "3469fbc9-903e-4b6d-be80-3e019d846251",
+			"key": "baseUrl",
+			"value": "https://localhost:7198"
+		},
+		{
+			"id": "92ddae9b-779c-41d4-af81-3fc117284d4b",
+			"key": "bearerToken",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
