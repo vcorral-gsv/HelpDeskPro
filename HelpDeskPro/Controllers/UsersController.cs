@@ -50,5 +50,12 @@ namespace HelpDeskPro.Controllers
             ResponseHeadersUtils.SetHeader_XPagination(Response, result.PaginationMetadata);
             return Ok(result);
         }
+        [HttpPost("get-grouped-by-team")]
+        public async Task<ActionResult<GenericPaginationOutputDto<ListUsersGroupedByTeamDto>>> GetUsersGroupedByTeam([FromBody] PaginationInputDto request)
+        {
+            var result = await _userService.GetUsersGroupedByTeamAsync(request);
+            ResponseHeadersUtils.SetHeader_XPagination(Response, result.PaginationMetadata);
+            return Ok(result);
+        }
     }
 }
